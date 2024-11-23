@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <github_file_url>"
+    exit 1
+fi
+
+github_url="$1"
+
+if [[ ! $github_url =~ ^https://github.com/([^/]+)/([^/]+)/blob/([^/]+)/(.+)$ ]]; then
+    echo "Invalid GitHub file URL format."
+    exit 1
+fi
+
+owner="${BASH_REMATCH[1]}"
+repo="${BASH_REMATCH[2]}"
+branch="${BASH_REMATCH[3]}"
+file_path="${BASH_REMATCH[4]}"
+
+file_name="${file_path##*/}" 
+
+raw_url="https://github.com/$owner/$repo/raw/$branch/$file_path"
+
+echo "Fetching patch $file_name from: $raw_url"
+wget $raw_url -P ~/webpatches/
+echo "Applying..."
+git apply ~/webpatches/$file_name
+echo "Changes in tree:"
+git diff

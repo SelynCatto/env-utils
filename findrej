@@ -1,0 +1,2 @@
+rejectedfrompatch=$(find . -name *.rej)
+echo "rejects in current directory: $rejectedfrompatch "

@@ -1,0 +1,7 @@
+#! /bin/bash
+set -e 
+var="${1?:Error \Username not set. Bye}"
+var="${2?:Error \Password not set. Bye}"
+var="${3?:Error \File not set. Bye}"
+
+curl -u $1:$2 -T $3 https://cloud.selyn.pet/remote.php/dav/files/$1/$4

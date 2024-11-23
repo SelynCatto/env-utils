@@ -1,0 +1,8 @@
+rejfiles=$(find . -name *.rej)
+origfiles=$(find . -name *.orig)
+echo "Cleaning up: $rejfiles"
+echo "Cleaning up: $origfiles"
+rm -rf $rejfiles
+rm -rf $origfiles
+git add .
+git am --continue
